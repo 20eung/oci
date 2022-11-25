@@ -1,6 +1,6 @@
 # Oracle Cloud 처음 사용자용
 
-## 구획 네트워크, 방화벽, 공용IP 설정
+## 구획, 가상 클라우드 네트워크, 보안 목록(방화벽), 공용 IP 설정
 
 ## 1. 구획 생성 (Compartments)
 
@@ -22,7 +22,7 @@
 
 ![](img/oci-compartments-04.png)
 
-## 2. 가상 네트워크 (Virtual Cloud Networks)
+## 2. 가상 클라우드 네트워크 (Virtual Cloud Networks)
 
 <img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
 
@@ -60,7 +60,7 @@ Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 
 
 ![](img/oci-vcn-08.png)
 
-## 3. 방화벽 (Security Lists)
+## 3. 보안 목록(방화벽) (Security Lists)
 
 왼쪽 **Resources (리소스)** 항목 아래에 **Security Lists (보안 목록)** 을 클릭하고, **Security List for Private Subnet-1st-vcn** 을 클릭합니다.
 
