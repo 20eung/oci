@@ -1,6 +1,6 @@
 # Oracle Cloud 처음 사용자용
 
-## 구획, 가상 클라우드 네트워크, 보안 목록(방화벽), 공용 IP 설정
+## 구획, 가상 클라우드 네트워크, 보안 목록(방화벽), 공용 IP 설정, 인스턴스 생성
 
 ## 1. 구획 생성 (Compartments)
 
@@ -95,6 +95,68 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 아래와 같이 공용 IP 주소를 확인할 수 있습니다.
 
 ![](img/oci-public-ip-04.png)
+
+## 5. 인스턴스 생성 (Instances)
+
+![](img/oci-instance-01.png)
+
+![](img/oci-instance-02.png)
+
+![](img/oci-instance-03.png)
+
+![](img/oci-instance-04.png)
+
+![](img/oci-instance-05.png)
+
+![](img/oci-instance-06.png)
+
+![](img/oci-instance-07.png)
+
+![](img/oci-instance-08.png)
+
+![](img/oci-instance-09.png)
+
+![](img/oci-instance-10.png)
+
+![](img/oci-instance-11.png)
+
+![](img/oci-instance-12.png)
+
+![](img/oci-instance-13.png)
+
+![](img/oci-instance-14.png)
+
+![](img/oci-instance-15.png)
+
+![](img/oci-instance-16.png)
+
+![](img/oci-instance-17.png)
+
+![](img/oci-instance-18.png)
+
+![](img/oci-instance-19.png)
+
+![](img/oci-instance-20.png)
+
+![](img/oci-instance-21.png)
+
+![](img/oci-instance-22.png)
+
+![](img/oci-instance-23.png)
+
+![](img/oci-instance-24.png)
+
+![](img/oci-instance-25.png)
+
+![](img/oci-instance-26.png)
+
+![](img/oci-instance-27.png)
+
+![](img/oci-instance-28.png)
+
+![](img/oci-instance-29.png)
+
+![](img/oci-instance-30.png)
 
 ## 참고 링크
 
