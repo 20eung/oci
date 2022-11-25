@@ -4,6 +4,8 @@
 
 ## 1. 구획 생성 (Compartments)
 
+![](img/menu.png){: width="50%" height="50%"}
+
 ![](img/oci-compartments-01.png)
 
 ![](img/oci-compartments-02.png)
