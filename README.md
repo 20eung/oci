@@ -10,6 +10,8 @@
 
 ![](img/oci-compartments-03.png)
 
+![](img/oci-compartments-04.png)
+
 ## 2. 가상 네트워크 (Virtual Cloud Networks)
 
 ![](img/oci-vcn-01.png)
