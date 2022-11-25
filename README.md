@@ -161,3 +161,5 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ## 참고 링크
 
 오라클 클라우드 구획, 가상 네트워크, 방화벽, 공용IP 설정하기 : https://www.wsgvet.com/cloud/4
+
+오라클 클라우드 인스턴스 생성, SSH 접속하기 : https://www.wsgvet.com/cloud/5
