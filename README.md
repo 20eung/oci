@@ -116,7 +116,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ![](img/oci-instance-02.png)
 
-또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="28">를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
+또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="20">를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
 
 ![](img/oci-instance-01.png)
 
