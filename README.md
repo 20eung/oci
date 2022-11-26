@@ -31,7 +31,7 @@
 [6. 참고 링크](#참고-링크)
 
 
-#
+***
 ## 1. 구획 생성 (Compartments)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
@@ -59,7 +59,7 @@
 
 
 
-#
+***
 ## 2. 가상 클라우드 네트워크 (Virtual Cloud Networks)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
@@ -112,7 +112,7 @@ Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 
 ![](img/oci-vcn-08.png)
 
 
-#
+***
 ## 3. 보안 목록 (Security Lists)
 
 왼쪽 **Resources (리소스)** 항목 아래에 **Security Lists (보안 목록)** 을 클릭하고, **Security List for Private Subnet-1st-vcn** 을 클릭합니다.
@@ -134,7 +134,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ![](img/oci-vcn-security-list-03.png)
 
 
-#
+***
 ## 4. 공용 IP (Reserved Public IPs)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
@@ -161,7 +161,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ![](img/oci-public-ip-04.png)
 
 
-#
+***
 ## 5. 인스턴스 생성 (Instances)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, **Compute (컴퓨트)** 메뉴를 선택한 후 **Instances (인스턴스)** 를 클릭합니다.
@@ -179,6 +179,9 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 **Create instance (인스턴스 생성)** 버튼을 클릭합니다.
 
 ![](img/oci-instance-03.png)
+
+
+
 
 ***
 > ### __Name (이름)__
