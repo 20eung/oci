@@ -6,7 +6,7 @@
 
 [2. 가상 클라우드 네트워크 (Virtual Cloud Networks)](#2-가상-클라우드-네트워크-virtual-cloud-networks)
 
-[3. 보안 목록(방화벽) (Security Lists)](#3-보안-목록방화벽-security-lists)
+[3. 보안 목록 (Security Lists)](#3-보안-목록-security-lists)
 
 [4. 공용 IP (Reserved Public IPs)](#4-공용-ip-reserved-public-ips)
 
@@ -72,7 +72,7 @@ Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 
 
 ![](img/oci-vcn-08.png)
 
-## 3. 보안 목록(방화벽) (Security Lists)
+## 3. 보안 목록 (Security Lists)
 
 왼쪽 **Resources (리소스)** 항목 아래에 **Security Lists (보안 목록)** 을 클릭하고, **Security List for Private Subnet-1st-vcn** 을 클릭합니다.
 
@@ -128,26 +128,31 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 **Placement (배치)** 항목의 **Edit (편집)** 을 클릭하거나
 
-**Images and shape (이미지 및 구성)** 항목의 **Edit (편집)** 을 클릭하여
+**Images and shape (이미지 및 구성)** 항목의 **Edit (편집)** 을 클릭하면
 
 ![](img/oci-instance-04.png)
 
-Availability domain (가용성 도메인)을 변경할 수 있습니다.
+### Placement (배치)
+
+**Placement (배치)** 에서는 Availability domain (가용성 도메인)을 변경할 수 있습니다.
 
 ![](img/oci-instance-05.png)
 
-OS 이미지를 변경할 수 있습니다.
+### Images (이미지)
+
+**Images and shape (이미지 및 구성)** 에서는 OS 이미지를 변경할 수 있습니다.
+
 기본 OS 이미지는 Oralce Linux 입니다.
 
 **Change image (이미지 변경)** 버튼을 눌러 변경할 수 있습니다.
 
 ![](img/oci-instance-06.png)
 
-Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 OS 버전을 고를 수 있습니다.
+Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 OS 버전을 선택할 수 있습니다.
 
 Canonical Ubuntu 20.04 버전을 선택하겠습니다.
 
-선택을 하였으면 **Select image (이미지 선택)** 버튼을 누릅니다.
+하단의 **Select image (이미지 선택)** 버튼을 누릅니다.
 
 ![](img/oci-instance-07.png)
 
@@ -156,6 +161,8 @@ OS 이미지가 Oracle Linux에서 Canonical Ubuntu로 바뀐 것을 확인할 �
 **Shape (구성)** 의 **Change shape (구성편집)** 버튼을 누르면 CPU 타입별 구성을 선택할 수 있습니다.
 
 ![](img/oci-instance-08.png)
+
+### Shape (구성)
 
 **AMD** 를 선택했을 때의 화면입니다.
 
@@ -182,7 +189,9 @@ Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
 
 ![](img/oci-instance-13.png)
 
-**Networking (네트워킹)**의 **Edit (편집)**를 눌러 네트워크 설정을 변경할 수 있습니다.
+### Networking (네트워킹)
+
+**Networking (네트워킹)** 의 **Edit (편집)** 를 눌러 네트워크 설정을 변경할 수 있습니다.
 
 ![](img/oci-instance-14.png)
 
@@ -198,6 +207,8 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 
 ![](img/oci-instance-17.png)
 
+### Add SSH keys
+
 인스턴스에 접속하기 위한 SSH 키를 추가하는 메뉴입니다.
 
 오라클 클라우드에서 생성해준 private key (전용 키)와 public key (공용 키)를 다운로드하여 사용할 수 있습니다.
@@ -208,15 +219,19 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 
 ![](img/oci-instance-19.png)
 
+### Boot volume (부트 볼륨)
+
 Boot volume (부트 볼륨) 크기도 설정 가능합니다. 왼쪽 체크박스를 누르면
 
 ![](img/oci-instance-20.png)
 
 아래와 같이 설정 화면이 나옵니다.
 
+![](img/oci-instance-21.png)
+
 모든 설정을 마쳤으면 아래 **Create (생성)** 버튼을 클릭합니다.
 
-![](img/oci-instance-21.png)
+### Information
 
 Instance (인스턴스)
 생성이 완료된 화면으로 인스턴스 정보를 확인할 수 있습니다.
@@ -226,9 +241,11 @@ Instance (인스턴스)
 - 공용 IP 정보 (Public IP)
 - 전용 IP 정보 (Private IP)
 
-사전에 생성한 Pubic IP (공용 IP)를 사용하려면 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
-
 ![](img/oci-instance-22.png)
+
+### Public IP (공용 IP)
+
+사전에 생성한 Pubic IP (공용 IP)를 사용하려면 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
 
 현재 설정된 내용을 확인할 수 있습니다. Name 항목의 인스턴스 이름을 클릭합니다.
 
