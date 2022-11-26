@@ -2,6 +2,10 @@
 
 ## 구획, 가상 클라우드 네트워크, 보안 목록(방화벽), 공용 IP 설정, 인스턴스 생성
 
+### 목차
+
+[1. 구획 생성](<##1.-구획-생성-(Compartments)>)
+
 ## 1. 구획 생성 (Compartments)
 
 <img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
