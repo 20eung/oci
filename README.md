@@ -28,6 +28,9 @@
 
     5.8 [Public IP (공용 IP)](#58-public-ip-공용-ip)
 
+6. [Ubuntu 서버 Swap 설정](#6-ubuntu-서버-swap-설정)
+
+
 [참고 링크](#참고-링크)
 
 
@@ -419,6 +422,12 @@ Update (업데이트)를 누릅니다.
 
 ![](img/oci-instance-30.png)
 
+
+
+***
+## 6. Ubuntu 서버 Swap 설정
+
+![Ubuntu 20.04: Add Swap Space](https://github.com/20eung/ubuntu-swap) 문서 참조
 
 
 ***
