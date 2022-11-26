@@ -427,6 +427,8 @@ Update (업데이트)를 누릅니다.
 ***
 ## 6. Ubuntu 서버 Swap 설정
 
+이 예제로 생성한 Ubuntu 서버는 메모리 1G로 RAM 부족으로 인한 오류 방지를 위해 스왑 설정을 해줌 
+
 - Ubuntu 20.04 Add Swap Space 문서 참조: https://github.com/20eung/ubuntu-swap
 
 
