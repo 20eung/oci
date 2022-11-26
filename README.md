@@ -132,11 +132,15 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ![](img/oci-instance-04.png)
 
+#
+
 ### Placement (배치)
 
 **Placement (배치)** 에서는 Availability domain (가용성 도메인)을 변경할 수 있습니다.
 
 ![](img/oci-instance-05.png)
+
+#
 
 ### Images (이미지)
 
@@ -161,6 +165,8 @@ OS 이미지가 Oracle Linux에서 Canonical Ubuntu로 바뀐 것을 확인할 �
 **Shape (구성)** 의 **Change shape (구성편집)** 버튼을 누르면 CPU 타입별 구성을 선택할 수 있습니다.
 
 ![](img/oci-instance-08.png)
+
+#
 
 ### Shape (구성)
 
@@ -189,6 +195,8 @@ Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
 
 ![](img/oci-instance-13.png)
 
+#
+
 ### Networking (네트워킹)
 
 **Networking (네트워킹)** 의 **Edit (편집)** 를 눌러 네트워크 설정을 변경할 수 있습니다.
@@ -207,6 +215,8 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 
 ![](img/oci-instance-17.png)
 
+#
+
 ### Add SSH keys
 
 인스턴스에 접속하기 위한 SSH 키를 추가하는 메뉴입니다.
@@ -218,6 +228,8 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 기존에 사용하던 public key (공용 키)를 텍스트로 복사한 후 붙여넣기로 사용할 수 있습니다.
 
 ![](img/oci-instance-19.png)
+
+#
 
 ### Boot volume (부트 볼륨)
 
@@ -231,6 +243,8 @@ Boot volume (부트 볼륨) 크기도 설정 가능합니다. 왼쪽 체크박�
 
 모든 설정을 마쳤으면 아래 **Create (생성)** 버튼을 클릭합니다.
 
+#
+
 ### Information
 
 Instance (인스턴스)
@@ -242,6 +256,8 @@ Instance (인스턴스)
 - 전용 IP 정보 (Private IP)
 
 ![](img/oci-instance-22.png)
+
+#
 
 ### Public IP (공용 IP)
 
