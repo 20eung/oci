@@ -12,6 +12,25 @@
 
 [5. 인스턴스 생성 (Instances)](#5-인스턴스-생성-instances)
 
+[5.1 Name (이름)](#name-이름)
+
+[5.2 Placement (배치)](#placement-배치)
+
+[5.3 Images (이미지)](#images-이미지)
+
+[5.4 Shape (구성)](#shape-구성)
+
+[5.5 Networking (네트워킹)](#networking-네트워킹)
+
+[5.6 Add SSH keys](#add-ssh-keys)
+
+[5.7 Boot volume (부트 볼륨)](#boot-volume-부트-볼륨)
+
+[5.8 Public IP (공용 IP)](#public-ip-공용-ip)
+
+[6. 참고 링크](#참고-링크)
+
+
 #
 ## 1. 구획 생성 (Compartments)
 
