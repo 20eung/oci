@@ -4,7 +4,7 @@
 
 ### 목차
 
-[1. 구획 생성](#1-구획-생성-compartments)
+[1. 구획 생성 (Compartments)](#1-구획-생성-compartments)
 
 [2. 가상 클라우드 네트워크 (Virtual Cloud Networks)](#2-가상-클라우드-네트워크-virtual-cloud-networks)
 
