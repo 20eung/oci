@@ -28,7 +28,7 @@
 
     5.8 [Public IP (공용 IP)](#public-ip-공용-ip)
 
-6. [참고 링크](#참고-링크)
+[참고 링크](#참고-링크)
 
 
 ***
@@ -197,7 +197,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### __Name (이름)__
+> ### 5.1 Name (이름)
 
 **Name (이름)** 항목에 자신이 원하는 이름을 적습니다.
 
@@ -209,7 +209,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### __Placement (배치)__
+> ### 5.2 Placement (배치)
 
 **Placement (배치)** 에서는 Availability domain (가용성 도메인)을 변경할 수 있습니다.
 
@@ -218,7 +218,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### __Images (이미지)__
+> ### 5.3 Images (이미지)
 
 **Images and shape (이미지 및 구성)** 에서는 OS 이미지를 변경할 수 있습니다.
 
@@ -251,7 +251,7 @@ CPU 타입별 구성을 선택할 수 있습니다.
 
 
 ***
-> ### __Shape (구성)__
+> ### 5.4 Shape (구성)
 
 **AMD** 를 선택했을 때의 화면입니다.
 
@@ -289,7 +289,7 @@ Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
 
 
 ***
-> ### __Networking (네트워킹)__
+> ### 5.5 Networking (네트워킹)
 
 **Networking (네트워킹)** 의 **Edit (편집)** 를 눌러 네트워크 설정을 변경할 수 있습니다.
 
@@ -318,7 +318,7 @@ Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선�
 
 
 ***
-> ### __Add SSH keys__
+> ### 5.6 Add SSH keys
 
 인스턴스에 접속하기 위한 SSH 키를 추가하는 메뉴입니다.
 
@@ -335,7 +335,7 @@ Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선�
 
 
 ***
-> ### __Boot volume (부트 볼륨)__
+> ### 5.7 Boot volume (부트 볼륨)
 
 Boot volume (부트 볼륨) 크기도 설정 가능합니다.   
 왼쪽 체크박스를 누르면
@@ -351,7 +351,7 @@ Boot volume (부트 볼륨) 크기도 설정 가능합니다.
 
 
 ***
-> ### __Information__
+> ### 5.8 Information
 
 Instance (인스턴스)
 생성이 완료된 화면으로 인스턴스 정보를 확인할 수 있습니다.
@@ -366,7 +366,7 @@ Instance (인스턴스)
 
 
 ***
-> ### __Public IP (공용 IP)__
+> ### 5.9 Public IP (공용 IP)
 
 사전에 생성한 Pubic IP (공용 IP)를 사용하려면   
 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
@@ -422,7 +422,7 @@ Update (업데이트)를 누릅니다.
 
 
 ***
-> ### __참고 링크__
+> ### 참고 링크
 
 - 오라클 클라우드 구획, 가상 네트워크, 방화벽, 공용IP 설정하기 : https://www.wsgvet.com/cloud/4
 
