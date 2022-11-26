@@ -427,7 +427,7 @@ Update (업데이트)를 누릅니다.
 ***
 ## 6. Ubuntu 서버 Swap 설정
 
-![Ubuntu 20.04: Add Swap Space](https://github.com/20eung/ubuntu-swap) 문서 참조
+- Ubuntu 20.04 Add Swap Space 문서 참조: https://github.com/20eung/ubuntu-swap
 
 
 ***
