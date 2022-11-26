@@ -2,40 +2,41 @@
 
 ### 목차
 
-[1. 구획 생성 (Compartments)](#1-구획-생성-compartments)
+1. [구획 생성 (Compartments)](#1-구획-생성-compartments)
 
-[2. 가상 클라우드 네트워크 (Virtual Cloud Networks)](#2-가상-클라우드-네트워크-virtual-cloud-networks)
+2. [가상 클라우드 네트워크 (Virtual Cloud Networks)](#2-가상-클라우드-네트워크-virtual-cloud-networks)
 
-[3. 보안 목록 (Security Lists)](#3-보안-목록-security-lists)
+3. [보안 목록 (Security Lists)](#3-보안-목록-security-lists)
 
-[4. 공용 IP (Reserved Public IPs)](#4-공용-ip-reserved-public-ips)
+4. [공용 IP (Reserved Public IPs)](#4-공용-ip-reserved-public-ips)
 
-[5. 인스턴스 생성 (Instances)](#5-인스턴스-생성-instances)
+5. [인스턴스 생성 (Instances)](#5-인스턴스-생성-instances)
 
-[5.1 Name (이름)](#name-이름)
+    5.1 [Name (이름)](#name-이름)
 
-[5.2 Placement (배치)](#placement-배치)
+    5.2 [Placement (배치)](#placement-배치)
 
-[5.3 Images (이미지)](#images-이미지)
+    5.3 [Images (이미지)](#images-이미지)
 
-[5.4 Shape (구성)](#shape-구성)
+    5.4 [Shape (구성)](#shape-구성)
 
-[5.5 Networking (네트워킹)](#networking-네트워킹)
+    5.5 [Networking (네트워킹)](#networking-네트워킹)
 
-[5.6 Add SSH keys](#add-ssh-keys)
+    5.6 [Add SSH keys](#add-ssh-keys)
 
-[5.7 Boot volume (부트 볼륨)](#boot-volume-부트-볼륨)
+    5.7 [Boot volume (부트 볼륨)](#boot-volume-부트-볼륨)
 
-[5.8 Public IP (공용 IP)](#public-ip-공용-ip)
+    5.8 [Public IP (공용 IP)](#public-ip-공용-ip)
 
-[6. 참고 링크](#참고-링크)
+6. [참고 링크](#참고-링크)
 
 
 ***
 ## 1. 구획 생성 (Compartments)
 
-<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
-**Identity & Security (거버넌스 및 관리)** 메뉴를 선택한 후 **Compartments (구획)** 를 클릭합니다.
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,   
+**Identity & Security (거버넌스 및 관리)** 메뉴를 선택한 후   
+**Compartments (구획)** 를 클릭합니다.
 
 ![](img/oci-compartments-01.png)
 
@@ -47,7 +48,8 @@
 
 
 
-**Name (이름)** 과 **Description (설명)** 을 적고 **Create Compartment (구획 생성)** 버튼을 클릭합니다.
+**Name (이름)** 과 **Description (설명)** 을 적고   
+**Create Compartment (구획 생성)** 버튼을 클릭합니다.
 
 ![](img/oci-compartments-03.png)
 
@@ -62,8 +64,9 @@
 ***
 ## 2. 가상 클라우드 네트워크 (Virtual Cloud Networks)
 
-<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
-**Networking (네트워킹)** 메뉴를 선택한 후 **Virtual Cloud Networks (가상 클라우드 네트워크)** 를 클릭합니다.
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,  
+**Networking (네트워킹)** 메뉴를 선택한 후   
+**Virtual Cloud Networks (가상 클라우드 네트워크)** 를 클릭합니다.
 
 ![](img/oci-vcn-01.png)
 
@@ -81,25 +84,29 @@
 
 
 
-**Create VCN with Internet Connectivity (인터넷 접속을 통한 VCN)** 선택 후 **Start VCN Wizard (VCN 마법사 시작)** 버튼을 클릭합니다.
+**Create VCN with Internet Connectivity (인터넷 접속을 통한 VCN)** 선택 후   
+**Start VCN Wizard (VCN 마법사 시작)** 버튼을 클릭합니다.
 
 ![](img/oci-vcn-04.png)
 
 
 
-Basic Information (기본 정보)에 **VCN Name (VCN 이름)** 에 적당한 이름을 넣고, **Next (다음)** 버튼을 클릭합니다.
+Basic Information (기본 정보)에 **VCN Name (VCN 이름)** 에 적당한 이름을 넣고,   
+**Next (다음)** 버튼을 클릭합니다.
 
 ![](img/oci-vcn-05.png)
 
 
 
-Review and Create (검토 및 생성) 화면에서 내용을 확인한 후, **Create (생성)** 버튼을 클릭합니다.
+Review and Create (검토 및 생성) 화면에서 내용을 확인한 후,  
+**Create (생성)** 버튼을 클릭합니다.
 
 ![](img/oci-vcn-06.png)
 
 
 
-Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 볼 수 있고, 아래 그림과 같이 완료된 화면이 나옵니다.
+Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 볼 수 있고,   
+아래 그림과 같이 완료된 화면이 나옵니다.
 
 ![](img/oci-vcn-07.png)
 
@@ -123,7 +130,8 @@ Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 
 
 Ingress Rules (수신 규칙)에 TCP 22 (SSH) 포트만 설정된 것을 확인할 수 있습니다.
 
-추가로 포트를 오픈하고자 하면 **Add Ingress Rules (수신 규칙 추가)** 버튼을 클릭하여 원하는 규칙을 추가할 수 있습니다.
+추가로 포트를 오픈하고자 하면 **Add Ingress Rules (수신 규칙 추가)** 버튼을 클릭하여   
+원하는 규칙을 추가할 수 있습니다.
 
 ![](img/oci-vcn-security-list-02.png)
 
@@ -138,7 +146,8 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ## 4. 공용 IP (Reserved Public IPs)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
-**Networking (네트워킹)** 메뉴를 선택한 후 **Reserved Public IPs (IP 관리)** 를 클릭합니다.
+**Networking (네트워킹)** 메뉴를 선택한 후    
+**Reserved Public IPs (IP 관리)** 를 클릭합니다.
 
 ![](img/oci-public-ip-01.png)
 
@@ -150,7 +159,8 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 
-**Reserved Public IP Address Name (예약된 공용 IP 주소 이름)** 에 원하는 이름을 적고, **Reserved Public IP Address (예약된 공용 IP 주소)** 버튼을 클릭합니다.
+**Reserved Public IP Address Name (예약된 공용 IP 주소 이름)** 에 원하는 이름을 적고,   
+**Reserved Public IP Address (예약된 공용 IP 주소)** 버튼을 클릭합니다.
 
 ![](img/oci-public-ip-03.png)
 
@@ -164,13 +174,16 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ***
 ## 5. 인스턴스 생성 (Instances)
 
-<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, **Compute (컴퓨트)** 메뉴를 선택한 후 **Instances (인스턴스)** 를 클릭합니다.
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, 
+**Compute (컴퓨트)** 메뉴를 선택한 후  
+**Instances (인스턴스)** 를 클릭합니다.
 
 ![](img/oci-instance-02.png)
 
 
 
-또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="20"> 를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
+또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="20"> 를 클릭하면   
+홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
 
 ![](img/oci-instance-01.png)
 
@@ -188,8 +201,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 **Name (이름)** 항목에 자신이 원하는 이름을 적습니다.
 
-**Placement (배치)** 항목의 **Edit (편집)** 을 클릭하거나
-
+**Placement (배치)** 항목의 **Edit (편집)** 을 클릭하거나   
 **Images and shape (이미지 및 구성)** 항목의 **Edit (편집)** 을 클릭하면
 
 ![](img/oci-instance-04.png)
@@ -218,19 +230,21 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 
-Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 OS 버전을 선택할 수 있습니다.
+Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 버전을 선택할 수 있습니다.
 
 Canonical Ubuntu 20.04 버전을 선택하겠습니다.
 
+![](img/oci-instance-07.png)
+
 하단의 **Select image (이미지 선택)** 버튼을 누릅니다.
 
-![](img/oci-instance-07.png)
 
 
 
 OS 이미지가 Oracle Linux에서 Canonical Ubuntu로 바뀐 것을 확인할 수 있습니다.
 
-**Shape (구성)** 의 **Change shape (구성편집)** 버튼을 누르면 CPU 타입별 구성을 선택할 수 있습니다.
+**Shape (구성)** 의 **Change shape (구성편집)** 버튼을 누르면   
+CPU 타입별 구성을 선택할 수 있습니다.
 
 ![](img/oci-instance-08.png)
 
@@ -251,7 +265,7 @@ OS 이미지가 Oracle Linux에서 Canonical Ubuntu로 바뀐 것을 확인할 �
 
 
 
-**Ampere** 를 선택했을 때의 화면입니다.
+**Ampere** 를 선택했을 때의 화면입니다.  
 **Always Free-eligible (항상 무로 적격)** 이 표시된 것을 확인할 수 있습니다.
 
 ![](img/oci-instance-11.png)
@@ -289,13 +303,15 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 
 
 
-**Subnet (서브넷)** 을 눌르면 Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선택할 수 있습니다.
+**Subnet (서브넷)** 을 누르면   
+Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선택할 수 있습니다.
 
 ![](img/oci-instance-16.png)
 
 
 
-**Advanced options (고급 옵션 표시)** 를 클릭하면 인스턴스의 사설 IP와 호스트 이름을 미리 지정할 수 있습니다.
+**Advanced options (고급 옵션 표시)** 를 클릭하면   
+인스턴스의 사설 IP와 호스트 이름을 미리 지정할 수 있습니다.
 
 ![](img/oci-instance-17.png)
 
@@ -321,7 +337,8 @@ Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Pu
 ***
 > ### __Boot volume (부트 볼륨)__
 
-Boot volume (부트 볼륨) 크기도 설정 가능합니다. 왼쪽 체크박스를 누르면
+Boot volume (부트 볼륨) 크기도 설정 가능합니다.   
+왼쪽 체크박스를 누르면
 
 ![](img/oci-instance-20.png)
 
@@ -351,7 +368,8 @@ Instance (인스턴스)
 ***
 > ### __Public IP (공용 IP)__
 
-사전에 생성한 Pubic IP (공용 IP)를 사용하려면 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
+사전에 생성한 Pubic IP (공용 IP)를 사용하려면   
+왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
 
 현재 설정된 내용을 확인할 수 있습니다. Name 항목의 인스턴스 이름을 클릭합니다.
 
@@ -365,13 +383,15 @@ VNIC 정보와 Public IP (공용 IP) 확인할 수 있습니다.
 
 
 
-IPv4 Address 항목의 Private IP Address (전용 IP 주소)의 오른쪽 끝의 점 3개를 클릭한 후 Edit (편집)를 누릅니다.
+IPv4 Address 항목의 Private IP Address (전용 IP 주소)의    
+오른쪽 끝의 점 3개를 클릭한 후 Edit (편집)를 누릅니다.
 
 ![](img/oci-instance-26.png)
 
 
 
-Public IP Type (공용 IP 유형)에서 No public IP (공용 IP 없음)을 선택 후 Update (업데이트)를 누릅니다. 자동으로 생성된 Public IP (공용 IP)를 제거하는 작업입니다.
+Public IP Type (공용 IP 유형)에서 No public IP (공용 IP 없음)을 선택 후    
+Update (업데이트)를 누릅니다. 자동으로 생성된 Public IP (공용 IP)를 제거하는 작업입니다.
 
 ![](img/oci-instance-27.png)
 
@@ -385,7 +405,9 @@ IPv4 Address에서 Public IP Address (공용 IP 주소) 가 비어 있는 것을
 
 
 
-Public IP Type (공용 IP 유형)에서 Reserved public IP (예약된 공용 IP)을 클릭하면 Select Existing Reserved IP Address (기존 예약된 IP 주소 선택) 메뉴가 나오고, 값을 선택할 수 있습니다.
+Public IP Type (공용 IP 유형)에서 Reserved public IP (예약된 공용 IP)을 클릭하면    
+Select Existing Reserved IP Address (기존 예약된 IP 주소 선택) 메뉴가 나오고,    
+값을 선택할 수 있습니다.
 
 ![](img/oci-instance-29.png)
 
