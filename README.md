@@ -1,7 +1,5 @@
 # Oracle Cloud 처음 사용자용
 
-## 구획, 가상 클라우드 네트워크, 보안 목록(방화벽), 공용 IP 설정, 인스턴스 생성
-
 ### 목차
 
 [1. 구획 생성 (Compartments)](#1-구획-생성-compartments)
@@ -13,6 +11,8 @@
 [4. 공용 IP (Reserved Public IPs)](#4-공용-ip-reserved-public-ips)
 
 [5. 인스턴스 생성 (Instances)](#5-인스턴스-생성-instances)
+
+#
 
 ## 1. 구획 생성 (Compartments)
 
@@ -110,9 +110,15 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ## 5. 인스턴스 생성 (Instances)
 
-![](img/oci-instance-01.png)
+<img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
+
+**Compute (컴퓨트)** 메뉴를 선택한 후 **Instances (인스턴스)** 를 클릭합니다.
 
 ![](img/oci-instance-02.png)
+
+또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="28">를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
+
+![](img/oci-instance-01.png)
 
 ![](img/oci-instance-03.png)
 
