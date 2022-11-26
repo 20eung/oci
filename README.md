@@ -16,7 +16,7 @@
 
 ## 1. 구획 생성 (Compartments)
 
-<img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
 
 **Identity & Security (거버넌스 및 관리)** 메뉴를 선택한 후 **Compartments (구획)** 를 클릭합니다.
 
@@ -36,7 +36,7 @@
 
 ## 2. 가상 클라우드 네트워크 (Virtual Cloud Networks)
 
-<img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
 
 **Networking (네트워킹)** 메뉴를 선택한 후 **Virtual Cloud Networks (가상 클라우드 네트워크)** 를 클릭합니다.
 
@@ -90,7 +90,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ## 4. 공용 IP (Reserved Public IPs)
 
-<img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
 
 **Networking (네트워킹)** 메뉴를 선택한 후 **Reserved Public IPs (IP 관리)** 를 클릭합니다.
 
@@ -110,7 +110,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ## 5. 인스턴스 생성 (Instances)
 
-<img src="img/menu.png" width="21" height="28"> 메뉴 버튼을 누르고,
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
 
 **Compute (컴퓨트)** 메뉴를 선택한 후 **Instances (인스턴스)** 를 클릭합니다.
 
