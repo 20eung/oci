@@ -116,65 +116,153 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 ![](img/oci-instance-02.png)
 
-또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="20">를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
+또는 화면 왼쪽 상단의 <img src="img/oracle-cloud.png" height="20"> 를 클릭하면 홈 화면으로 돌아오는데 여기에서 **Instances (인스턴스)** 를 클릭합니다.
 
 ![](img/oci-instance-01.png)
 
+**Create instance (인스턴스 생성)** 버튼을 클릭합니다.
+
 ![](img/oci-instance-03.png)
+
+**Name (이름)** 항목에 자신이 원하는 이름을 적습니다.
+
+**Placement (배치)** 항목의 **Edit (편집)** 을 클릭하거나
+
+**Images and shape (이미지 및 구성)** 항목의 **Edit (편집)** 을 클릭하여
 
 ![](img/oci-instance-04.png)
 
+Availability domain (가용성 도메인)을 변경할 수 있습니다.
+
 ![](img/oci-instance-05.png)
+
+OS 이미지를 변경할 수 있습니다.
+기본 OS 이미지는 Oralce Linux 입니다.
+
+**Change image (이미지 변경)** 버튼을 눌러 변경할 수 있습니다.
 
 ![](img/oci-instance-06.png)
 
+Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 OS 버전을 고를 수 있습니다.
+
+Canonical Ubuntu 20.04 버전을 선택하겠습니다.
+
+선택을 하였으면 **Select image (이미지 선택)** 버튼을 누릅니다.
+
 ![](img/oci-instance-07.png)
+
+OS 이미지가 Oracle Linux에서 Canonical Ubuntu로 바뀐 것을 확인할 수 있습니다.
+
+**Shape (구성)** 의 **Change shape (구성편집)** 버튼을 누르면 CPU 타입별 구성을 선택할 수 있습니다.
 
 ![](img/oci-instance-08.png)
 
+**AMD** 를 선택했을 때의 화면입니다.
+
 ![](img/oci-instance-09.png)
+
+**Intel** 을 선택했을 때의 화면입니다.
 
 ![](img/oci-instance-10.png)
 
+**Ampere** 를 선택했을 때의 화면입니다.
+**Always Free-eligible (항상 무로 적격)** 이 표시된 것을 확인할 수 있습니다.
+
 ![](img/oci-instance-11.png)
+
+**Specialty and previous generation (특수성 및 이전 세대)** 을 선택했을 때의 화면입니다.
+
+**AMD CPU** 기반 구성이면서 **Always Free-eligible (항상 무로 적격)** 이 표시된 것을 확인할 수 있습니다.
+
+이것을 선택하겠습니다.
 
 ![](img/oci-instance-12.png)
 
+Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
+
 ![](img/oci-instance-13.png)
+
+**Networking (네트워킹)**의 **Edit (편집)**를 눌러 네트워크 설정을 변경할 수 있습니다.
 
 ![](img/oci-instance-14.png)
 
+Virtual Cloud Network (가상 클라우드 네트워크), Subnet (서브넷), Public IPv4 address (공용 IPv4 주소) 설정을 변경할 수 있습니다.
+
 ![](img/oci-instance-15.png)
+
+**Subnet (서브넷)** 을 눌르면 Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선택할 수 있습니다.
 
 ![](img/oci-instance-16.png)
 
+**Advanced options (고급 옵션 표시)** 를 클릭하면 인스턴스의 사설 IP와 호스트 이름을 미리 지정할 수 있습니다.
+
 ![](img/oci-instance-17.png)
+
+인스턴스에 접속하기 위한 SSH 키를 추가하는 메뉴입니다.
+
+오라클 클라우드에서 생성해준 private key (전용 키)와 public key (공용 키)를 다운로드하여 사용할 수 있습니다.
 
 ![](img/oci-instance-18.png)
 
+기존에 사용하던 public key (공용 키)를 텍스트로 복사한 후 붙여넣기로 사용할 수 있습니다.
+
 ![](img/oci-instance-19.png)
+
+Boot volume (부트 볼륨) 크기도 설정 가능합니다. 왼쪽 체크박스를 누르면
 
 ![](img/oci-instance-20.png)
 
+아래와 같이 설정 화면이 나옵니다.
+
+모든 설정을 마쳤으면 아래 **Create (생성)** 버튼을 클릭합니다.
+
 ![](img/oci-instance-21.png)
+
+Instance (인스턴스)
+생성이 완료된 화면으로 인스턴스 정보를 확인할 수 있습니다.
+
+- OS 이미지 정보 (Image)
+- 구성 정보 (Shape)
+- 공용 IP 정보 (Public IP)
+- 전용 IP 정보 (Private IP)
+
+사전에 생성한 Pubic IP (공용 IP)를 사용하려면 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
 
 ![](img/oci-instance-22.png)
 
+현재 설정된 내용을 확인할 수 있습니다. Name 항목의 인스턴스 이름을 클릭합니다.
+
 ![](img/oci-instance-23.png)
+
+VNIC 정보와 Public IP (공용 IP) 확인할 수 있습니다.
 
 ![](img/oci-instance-24.png)
 
-![](img/oci-instance-25.png)
+IPv4 Address 항목의 Private IP Address (전용 IP 주소)의 오른쪽 끝의 점 3개를 클릭한 후 Edit (편집)를 누릅니다.
 
 ![](img/oci-instance-26.png)
 
+Public IP Type (공용 IP 유형)에서 No public IP (공용 IP 없음)을 선택 후 Update (업데이트)를 누릅니다. 자동으로 생성된 Public IP (공용 IP)를 제거하는 작업입니다.
+
 ![](img/oci-instance-27.png)
+
+IPv4 Address에서 Public IP Address (공용 IP 주소) 가 비어 있는 것을 확인할 수 있습니다.
+
+다시 오른쪽 끝 점 3개를 클릭한 후 Edit (편집)를 누릅니다.
 
 ![](img/oci-instance-28.png)
 
+Public IP Type (공용 IP 유형)에서 Reserved public IP (예약된 공용 IP)을 클릭하면 Select Existing Reserved IP Address (기존 예약된 IP 주소 선택) 메뉴가 나오고, 값을 선택할 수 있습니다.
+
+Update (업데이트)를 누릅니다.
+
 ![](img/oci-instance-29.png)
 
+사전에 생성한 Pubic IP (공용 IP)로 변경된 것을 확인할 수 있습니다.
+
 ![](img/oci-instance-30.png)
+
+#
 
 ## 참고 링크
 
