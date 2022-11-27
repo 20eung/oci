@@ -122,8 +122,20 @@ Virtual Cloud Network (가상 클라우드 네트워크) 생성 진행상황을 
 ![](img/oci-vcn-08.png)
 
 
+
 ***
-## 3. 보안 목록 (Security Lists)
+## 3. 네트워크 보안 그룹 (Network Security Group)
+
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,  
+**Networking (네트워킹)** 메뉴를 선택한 후   
+**Virtual Cloud Networks (가상 클라우드 네트워크)** 를 클릭합니다.
+
+![](img/oci-vcn-01.png)
+
+
+
+***
+## 4. 보안 목록 (Security Lists)
 
 왼쪽 **Resources (리소스)** 항목 아래에 **Security Lists (보안 목록)** 을 클릭하고, **Security List for Private Subnet-1st-vcn** 을 클릭합니다.
 
@@ -145,8 +157,10 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 ![](img/oci-vcn-security-list-03.png)
 
 
+
+
 ***
-## 4. 공용 IP (Reserved Public IPs)
+## 5. 공용 IP (Reserved Public IPs)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고,
 **Networking (네트워킹)** 메뉴를 선택한 후    
@@ -175,7 +189,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-## 5. 인스턴스 생성 (Instances)
+## 6. 인스턴스 생성 (Instances)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, 
 **Compute (컴퓨트)** 메뉴를 선택한 후  
@@ -200,7 +214,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### 5.1 Name (이름)
+> ### 6.1 Name (이름)
 
 **Name (이름)** 항목에 자신이 원하는 이름을 적습니다.
 
@@ -212,7 +226,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### 5.2 Placement (배치)
+> ### 6.2 Placement (배치)
 
 **Placement (배치)** 에서는 Availability domain (가용성 도메인)을 변경할 수 있습니다.
 
@@ -221,7 +235,7 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
-> ### 5.3 Images (이미지)
+> ### 6.3 Images (이미지)
 
 **Images and shape (이미지 및 구성)** 에서는 OS 이미지를 변경할 수 있습니다.
 
@@ -254,7 +268,7 @@ CPU 타입별 구성을 선택할 수 있습니다.
 
 
 ***
-> ### 5.4 Shape (구성)
+> ### 6.4 Shape (구성)
 
 **AMD** 를 선택했을 때의 화면입니다.
 
@@ -292,7 +306,7 @@ Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
 
 
 ***
-> ### 5.5 Networking (네트워킹)
+> ### 6.5 Networking (네트워킹)
 
 **Networking (네트워킹)** 의 **Edit (편집)** 를 눌러 네트워크 설정을 변경할 수 있습니다.
 
@@ -321,7 +335,7 @@ Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선�
 
 
 ***
-> ### 5.6 Add SSH keys
+> ### 6.6 Add SSH keys
 
 인스턴스에 접속하기 위한 SSH 키를 추가하는 메뉴입니다.
 
@@ -338,7 +352,7 @@ Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선�
 
 
 ***
-> ### 5.7 Boot volume (부트 볼륨)
+> ### 6.7 Boot volume (부트 볼륨)
 
 Boot volume (부트 볼륨) 크기도 설정 가능합니다.   
 왼쪽 체크박스를 누르면
@@ -354,7 +368,7 @@ Boot volume (부트 볼륨) 크기도 설정 가능합니다.
 
 
 ***
-> ### 5.8 Information
+> ### 6.8 Information
 
 Instance (인스턴스)
 생성이 완료된 화면으로 인스턴스 정보를 확인할 수 있습니다.
@@ -369,7 +383,7 @@ Instance (인스턴스)
 
 
 ***
-> ### 5.9 Public IP (공용 IP)
+> ### 6.9 Public IP (공용 IP)
 
 사전에 생성한 Pubic IP (공용 IP)를 사용하려면   
 왼쪽 하단의 **Attached VNICs (연결된 VNIC)** 을 클릭합니다.
@@ -425,7 +439,12 @@ Update (업데이트)를 누릅니다.
 
 
 ***
-## 6. Ubuntu 서버 Swap 설정
+## 7. 네트워크 보안 그룹 (Network Security Group)
+
+
+
+***
+## 8. Ubuntu 서버 Swap 설정
 
 이 예제로 생성한 Ubuntu 서버는 메모리 1G로 RAM 부족으로 인한 오류 방지를 위해 스왑 설정을 해줌 
 
