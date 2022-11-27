@@ -432,15 +432,62 @@ Update (업데이트)를 누릅니다.
 ***
 ## 6. 네트워크 보안 그룹 (Network Security Group)
 
+
+> ### 6.1 보안 목록(Security Lists)과 네트워크 보안 그룹(Network Security Groups) 차이점
+
+| 보안 도구 | 적용 대상 | 사용 방법 | 제한 사항 |
+|----------|----------|----------|----------|
+| 보안 목록 | 서브넷의 모든 VNIC | 서브넷에 연결 | 서브넷 당 최대 5개 |
+| 네트워크 보안 그룹 | 동일한 VCN의 선택된 NVIC | VNIC에 추가 | VNIC당 최대 5개 |
+
+NSG를 사용하면 애플리케이션 보안 요구 사항에서 VCN의 서브넷 아키텍처를 분리할 수 있으므로 Oracle은 보안 목록 대신 NSG를 사용할 것을 권장합니다.
+
+
+> ### 6.2 **Network Security Group (네트워크 보안 그룹)** 만들기
+
+VCN (가상 클라우드 네트워크) 등록 정보의 리소스 중 **Network Security Group (네트워크 보안 그룹)** 을 클릭하고,   
+**Create Network Security Group (네트워크 보안 그룹 생성)** 버튼을 누릅니다.
+
 ![](img/oci-nsg-01.png)
+
+**Name (이름)** 을 적고 다음 버튼을 누릅니다.
 
 ![](img/oci-nsg-02.png)
 
+**Add Security Rules (보안 규칙 추가)** 의 Rule (규칙)에 보안 규칙을 정의한 후 Create (생성) 버튼을 클릭합니다.
+
+- Direction(방향): Ingress(수신), Egress(송신)
+- Source Type(소스 유형): CIDR, Services(서비스), NSG(네트워크 보안 그룹)
+- IP Protocol: ICMP, RDP, SSH, TCP, UDP, 모든 프로토콜 등
+- Destination Port Range(대상 포트 범위): 콤마(,)로 여러 개 입력 가능
+
 ![](img/oci-nsg-03.png)
+
+
+생성된 Security Rules (보안 규칙)을 확인할 수 있습니다.   
+**Add Rules (규칙 추가)** 버튼을 눌러 여러 개의 규칙을 추가할 수 있습니다.
 
 ![](img/oci-nsg-04.png)
 
+
+> ### 6.3 **Network Security Group (네트워크 보안 그룹)** 인스턴스에 적용하기
+
+<img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, 
+**Compute (컴퓨트)** 메뉴를 선택한 후  
+**Instances (인스턴스)** 를 클릭합니다.
+
+인스턴스를 눌러 Instance Details (세부 등록 정보) 화면으로 이동합니다.
+
+왼쪽 Resources (리소스) 메뉴 중 Attached VNICs (연결된 VNIC)를 클릭하고   
+인스턴스와 동일한 기본 VNIC을 선택하여   
+VNIC 세부 정보 화면으로 이동합니다.
+
+**Primary IP Information (기본 IP 정보)** 의 Network Security Groups (네트워크 보안 그룹) 항목의 **Edit (편집)** 을 클릭합니다.
+
 ![](img/oci-nsg-05.png)
+
+
+리스트 박스를 클릭하여 미리 생성한 Network Security Group (네트워크 보안 그룹)을 선택하고, Save changes (변경사항 저장) 버튼을 누릅니다.
 
 ![](img/oci-nsg-06.png)
 
