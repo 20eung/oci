@@ -26,7 +26,9 @@
 
     5.7 [Boot volume (부트 볼륨)](#57-boot-volume-부트-볼륨)
 
-    5.8 [Public IP (공용 IP)](#58-public-ip-공용-ip)
+    5.8 [Information (인스턴스 정보)](#58-information)
+
+    5.9 [Public IP (공용 IP)](#59-public-ip-공용-ip)
 
 6. [네트워크 보안 그룹 (Network Security Group)](#6-네트워크-보안-그룹-network-security-group)
 
@@ -180,6 +182,24 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 
 ***
+
+> [!WARNING]
+> **Always Free 인스턴스 유휴 회수 정책 (중요)**
+>
+> Oracle Cloud는 Always Free 인스턴스가 **7일 연속**으로 아래 기준 미만인 유휴 상태일 경우,
+> 인스턴스를 자동으로 **중지하거나 회수**할 수 있습니다.
+> - CPU 평균 사용률 10% 미만
+> - 네트워크 수신 500MB / 7일 미만
+>
+> **방지 방법**: `cron`으로 주기적으로 부하를 발생시키는 스크립트를 등록합니다.
+>
+> ```bash
+> # crontab -e 로 등록 (매 10분마다 간단한 연산 실행)
+> */10 * * * * /usr/bin/sha256sum /dev/urandom | head -c 1M > /dev/null 2>&1
+> ```
+>
+> 또는 실제 서비스(웹서버, 봇 등)를 상시 실행하면 자연스럽게 회수를 방지할 수 있습니다.
+
 ## 5. 인스턴스 생성 (Instances)
 
 <img src="img/menu.png" width="14" height="20"> 메뉴 버튼을 누르고, 
@@ -240,7 +260,10 @@ Egress Rules (송신 규칙)은 기본적으로 모두 오픈되어 있습니다
 
 Ubuntu, CentOS, Oracle Linux, Windows 등의 OS와 버전을 선택할 수 있습니다.
 
-Canonical Ubuntu 20.04 버전을 선택하겠습니다.
+**Canonical Ubuntu 24.04 LTS** 버전을 선택하겠습니다.
+
+> 2026년 기준 표준 지원 중 (2029년 4월까지 지원)
+> Ubuntu 20.04 LTS는 2025년부터 ESM(확장 보안 유지보수)으로 전환되었으므로 24.04 LTS를 권장합니다.
 
 ![](img/oci-instance-07.png)
 
@@ -274,23 +297,25 @@ CPU 타입별 구성을 선택할 수 있습니다.
 
 
 **Ampere** 를 선택했을 때의 화면입니다.  
-**Always Free-eligible (항상 무로 적격)** 이 표시된 것을 확인할 수 있습니다.
+**Always Free-eligible (항상 무료 적격)** 이 표시된 것을 확인할 수 있습니다.
 
 ![](img/oci-instance-11.png)
 
+> **Oracle Always Free의 핵심 혜택 — Ampere A1 Flex**
+>
+> Ampere A1 Compute (VM.Standard.A1.Flex) 는 **무료**임에도 아래와 같은 파격적인 스펙을 제공합니다:
+>
+> | 항목 | 내용 |
+> |------|------|
+> | 총 무료 할당량 | **4 OCPU + 24 GB RAM** (월 기준) |
+> | 활용 방법 | 1개 인스턴스에 4 OCPU / 24 GB 전부 할당 가능 |
+> | 분산 사용 | 또는 최대 4개 인스턴스로 나눠서 사용 가능 |
+> | 네트워크 | OCPU당 1 Gbps 대역폭 |
+>
+> 이는 AWS, GCP 등 다른 클라우드 무료 티어와 비교하면 압도적인 수준입니다.
+> 초보자라면 **Ampere A1 Flex (4 OCPU / 24 GB)** 단일 인스턴스 구성을 강력히 권장합니다.
 
-
-**Specialty and previous generation (특수성 및 이전 세대)** 을 선택했을 때의 화면입니다.
-
-**AMD CPU** 기반 구성이면서 **Always Free-eligible (항상 무로 적격)** 이 표시된 것을 확인할 수 있습니다.
-
-이것을 선택하겠습니다.
-
-![](img/oci-instance-12.png)
-
-
-
-Shape (구성)가 Ampere에서 AMD로 바뀐 것을 확인할 수 있습니다.
+**VM.Standard.A1.Flex** (Ampere) 를 선택하고, OCPU와 메모리를 원하는 값으로 설정합니다.
 
 ![](img/oci-instance-13.png)
 
@@ -339,6 +364,37 @@ Public subnets (공용 서브넷)과 Private subnets (전용 서브넷)을 선�
 기존에 사용하던 public key (공용 키)를 텍스트로 복사한 후 붙여넣기로 사용할 수 있습니다.
 
 ![](img/oci-instance-19.png)
+
+
+
+#### SSH 키를 직접 생성하는 방법 (초보자 권장)
+
+SSH 키가 없다면 아래 방법으로 직접 생성할 수 있습니다.
+
+**Mac / Linux / Windows 11 터미널**
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+# 저장 경로 물음: Enter 로 기본값(~/.ssh/id_rsa) 사용
+# 비밀번호 물음: Enter 로 생략 가능
+```
+
+생성 후 공개 키를 확인합니다:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+**Windows PowerShell**
+
+```powershell
+ssh-keygen -t rsa -b 4096
+# 생성 후 공개 키 확인:
+type $env:USERPROFILE\.ssh\id_rsa.pub
+```
+
+위에서 출력된 `ssh-rsa AAAA...` 로 시작하는 공개 키 전체를 복사하여   
+OCI 콘솔의 **Paste public keys** 란에 붙여넣습니다.
 
 
 
@@ -503,9 +559,13 @@ Update (업데이트)를 누릅니다.
 ***
 ## 7. Ubuntu 서버 Swap 설정
 
-이 예제로 생성한 Ubuntu 서버는 메모리 1G로 RAM 부족으로 인한 오류 방지를 위해 스왑 설정을 하는 것을 권장합니다.
+이 예제로 생성한 Ubuntu 서버는 RAM 부족으로 인한 오류 방지를 위해 스왑 설정을 권장합니다.
 
-- Ubuntu 20.04 Add Swap Space 문서 참조: https://github.com/20eung/ubuntu-swap
+> Ampere A1 Flex (24 GB RAM) 를 선택했다면 스왑 설정은 선택 사항입니다.
+> AMD VM.Standard.E2.1.Micro (1 GB RAM) 를 사용하는 경우 반드시 설정을 권장합니다.
+
+- Ubuntu 22.04 / 24.04 LTS에서도 동일하게 적용 가능합니다.
+- Add Swap Space 문서 참조: https://github.com/20eung/ubuntu-swap
 
 
 ***
