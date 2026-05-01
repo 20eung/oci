@@ -1,0 +1,92 @@
+name: OCI Instance Auto-Launch
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # 10분마다 실행
+  workflow_dispatch:         # 수동 실행 가능
+
+jobs:
+  launch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: OCI CLI 설치
+        run: pip install oci-cli --quiet
+
+      - name: OCI CLI 설정
+        env:
+          OCI_PRIVATE_KEY: ${{ secrets.OCI_PRIVATE_KEY }}
+          OCI_USER_OCID: ${{ secrets.OCI_USER_OCID }}
+          OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
+          OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+        run: |
+          mkdir -p ~/.oci
+          printf '%s' "$OCI_PRIVATE_KEY" > ~/.oci/private_key.pem
+          chmod 600 ~/.oci/private_key.pem
+          cat > ~/.oci/config << EOF
+          [DEFAULT]
+          user=$OCI_USER_OCID
+          fingerprint=$OCI_FINGERPRINT
+          tenancy=$OCI_TENANCY_OCID
+          region=$OCI_REGION
+          key_file=/root/.oci/private_key.pem
+          EOF
+
+      - name: 기존 인스턴스 확인
+        id: check
+        env:
+          OCI_COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
+        run: |
+          COUNT=$(oci compute instance list \
+            --compartment-id "$OCI_COMPARTMENT_ID" \
+            --display-name "oci-vm-auto" \
+            --lifecycle-state RUNNING \
+            --query 'length(data)' \
+            --raw-output 2>/dev/null || echo "0")
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "현재 실행 중인 인스턴스 수: $COUNT"
+
+      - name: 인스턴스 생성 시도
+        if: steps.check.outputs.count == '0'
+        id: launch
+        env:
+          OCI_AD: ${{ secrets.OCI_AD }}
+          OCI_COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
+          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
+          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
+        run: |
+          printf '%s' "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
+
+          echo "시도 시간: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+
+          oci compute instance launch \
+            --availability-domain "$OCI_AD" \
+            --compartment-id "$OCI_COMPARTMENT_ID" \
+            --shape "VM.Standard.A1.Flex" \
+            --shape-config '{"ocpus": 4, "memoryInGBs": 24}' \
+            --subnet-id "$OCI_SUBNET_ID" \
+            --image-id "$OCI_IMAGE_ID" \
+            --assign-public-ip true \
+            --display-name "oci-vm-auto" \
+            --ssh-authorized-keys-file /tmp/oci_key.pub \
+            --wait-for-state RUNNING && \
+            echo "success=true" >> $GITHUB_OUTPUT
+
+      - name: 이미 인스턴스 존재
+        if: steps.check.outputs.count != '0'
+        run: echo "인스턴스가 이미 실행 중입니다. 종료합니다."
+
+      - name: 성공 시 워크플로우 자동 비활성화
+        if: steps.launch.outputs.success == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          echo "인스턴스 생성 성공! 워크플로우를 비활성화합니다."
+          curl -s -X PUT \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GH_REPO/actions/workflows/launch-oci.yml/disable"
