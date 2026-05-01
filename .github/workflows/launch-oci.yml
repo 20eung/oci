@@ -36,6 +36,22 @@ jobs:
       - name: OCI CLI 연결 확인
         run: oci iam region list --output table
 
+      - name: 리소스 값 검증
+        env:
+          OCI_COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
+          OCI_AD: ${{ secrets.OCI_AD }}
+          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
+        run: |
+          echo "=== 구획 확인 ==="
+          oci iam compartment get --compartment-id "$OCI_COMPARTMENT_ID" --query 'data.name' --raw-output
+          echo "=== 서브넷 확인 ==="
+          oci network subnet get --subnet-id "$OCI_SUBNET_ID" --query 'data."display-name"' --raw-output
+          echo "=== 이미지 확인 ==="
+          oci compute image get --image-id "$OCI_IMAGE_ID" --query 'data."display-name"' --raw-output
+          echo "=== AD 값 ==="
+          echo "$OCI_AD"
+
       - name: 기존 인스턴스 확인
         id: check
         env:
