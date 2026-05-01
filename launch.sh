@@ -21,7 +21,7 @@ do
         --availability-domain "$AD" \
         --compartment-id "$COMPARTMENT_ID" \
         --shape "VM.Standard.A1.Flex" \
-        --shape-config '{"ocpus": 4, "memory_in_gbs": 24}' \
+        --shape-config '{"ocpus": 4.0, "memoryInGBs": 24.0}' \
         --subnet-id "$SUBNET_ID" \
         --image-id "$IMAGE_ID" \
         --assign-public-ip true \
