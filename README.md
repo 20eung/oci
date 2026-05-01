@@ -442,59 +442,84 @@ Update (업데이트)를 누릅니다.
 > ### 5.10 "Out of host capacity" 오류 해결 — 자동 재시도 스크립트
 
 Ampere A1 Flex 인스턴스는 인기가 많아 **"Out of host capacity."** 오류로 생성이 거부되는 경우가 잦습니다.
-수동으로 반복 시도하는 대신 두 가지 방법으로 자동화할 수 있습니다.
+아래 스크립트를 로컬 PC나 서버에서 백그라운드로 실행하면 자원이 확보될 때 자동으로 생성됩니다.
 
 > [!NOTE]
-> OCI Cloud Shell은 일정 시간 비활성 상태가 되면 세션이 종료되어 `nohup` 프로세스도 함께 종료됩니다.
-> **며칠씩 안정적으로 재시도하려면 GitHub Actions 방법을 권장합니다.**
+> OCI Cloud Shell은 일정 시간 비활성 상태가 되면 세션이 종료되어 프로세스도 함께 종료됩니다.
+> **며칠씩 안정적으로 재시도하려면 로컬 PC 또는 별도 서버에서 실행하는 것을 권장합니다.**
 
----
+**1단계 — OCI CLI 설치 및 설정**
 
-#### 방법 A — OCI Cloud Shell (단기 재시도)
+```bash
+# OCI CLI 설치
+bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)" -- --accept-all-defaults
+source ~/.bashrc
 
-브라우저 탭을 유지하는 동안에만 동작합니다. 아래 스크립트를 **OCI Cloud Shell**에서 백그라운드로 실행하면 자원이 확보될 때 자동으로 생성됩니다.
+# OCI config 파일 생성
+mkdir -p ~/.oci
+cat > ~/.oci/config << 'EOF'
+[DEFAULT]
+user=ocid1.user.oc1..xxxxxx
+fingerprint=xx:xx:xx:xx:...
+tenancy=ocid1.tenancy.oc1..xxxxxx
+region=ap-tokyo-1
+key_file=~/.oci/oci-api-pri.pem
+EOF
+chmod 600 ~/.oci/config ~/.oci/oci-api-pri.pem
 
-**1단계 — 스크립트 작성**
+# 연결 테스트
+oci iam region list --output table
+```
 
-아래 내용을 `launch.sh`로 저장하고, 변수 4개를 본인 환경에 맞게 수정합니다.
+> **필요한 값 확인 방법**
+> - `user` : OCI 콘솔 → 우측 상단 프로필 → **My profile** → OCID 복사
+> - `fingerprint` : **My profile → Tokens and keys → API keys** 에서 확인
+> - `tenancy` : OCI 콘솔 → 우측 상단 프로필 → **Tenancy** → OCID 복사
+> - `key_file` : **My profile → API keys → Add API key** 에서 개인 키(`.pem`) 다운로드
+
+**2단계 — 스크립트 작성**
+
+아래 내용을 `oci-create.sh`로 저장하고, 변수 4개를 본인 환경에 맞게 수정합니다.
 
 ```bash
 #!/bin/bash
+
 export TZ='Asia/Seoul'
+PATH="$HOME/bin:$PATH"
 
-# SSH 공개 키를 임시 파일로 저장
-echo "ssh-rsa AAAA...your_public_key..." > oci_key.pub
+LOG_FILE="$HOME/oci-instance.log"
 
-# 변수 설정 (본인 환경에 맞게 수정)
-AD="kbsi:AP-TOKYO-1-AD-1"
 COMPARTMENT_ID="ocid1.compartment.oc1..xxxxxx"
+AVAILABILITY_DOMAIN="namespace:AP-TOKYO-1-AD-1"
 SUBNET_ID="ocid1.subnet.oc1.ap-tokyo-1.xxxxxx"
 IMAGE_ID="ocid1.image.oc1.ap-tokyo-1.xxxxxx"
+SSH_KEY_FILE="$HOME/.oci/oci-ssh-key.pub"
 
-while true
-do
-    echo "------------------------------------------------"
-    echo "시도 시간: $(date)"
-    echo "ARM 인스턴스(4 OCPU, 24GB) 생성을 시도합니다..."
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] 인스턴스 자동 생성 시작" | tee -a "$LOG_FILE"
 
-    oci compute instance launch \
-        --availability-domain "$AD" \
+while true; do
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 생성 시도 중..." | tee -a "$LOG_FILE"
+
+    RESULT=$(oci compute instance launch \
         --compartment-id "$COMPARTMENT_ID" \
+        --availability-domain "$AVAILABILITY_DOMAIN" \
         --shape "VM.Standard.A1.Flex" \
-        --shape-config '{"ocpus": 4, "memoryInGB": 24}' \
+        --shape-config '{"ocpus": 4, "memoryInGBs": 24}' \
         --subnet-id "$SUBNET_ID" \
         --image-id "$IMAGE_ID" \
         --assign-public-ip true \
+        --boot-volume-size-in-gbs 50 \
+        --ssh-authorized-keys-file "$SSH_KEY_FILE" \
         --display-name "oci-vm-auto" \
-        --ssh-authorized-keys-file "oci_key.pub" \
-        --wait-for-state RUNNING
+        2>&1)
 
-    if [ $? -eq 0 ]; then
-        echo "인스턴스 생성에 성공했습니다."
-        rm oci_key.pub
-        break
+    if echo "$RESULT" | grep -q "ocid1.instance"; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] 성공! 인스턴스가 생성되었습니다." | tee -a "$LOG_FILE"
+        exit 0
     else
-        echo "생성 실패. 120초 후 재시도..."
+        MSG=$(echo "$RESULT" | grep -o '"message": "[^"]*"' | head -1)
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] 실패 - $MSG" | tee -a "$LOG_FILE"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] 120초 후 재시도..." | tee -a "$LOG_FILE"
     fi
 
     sleep 120
@@ -503,159 +528,25 @@ done
 
 > **변수 확인 방법**
 > - `COMPARTMENT_ID` : **Identity & Security → Compartments** 에서 구획 OCID 복사
+> - `AVAILABILITY_DOMAIN` : 인스턴스 생성 화면 → Placement 에서 AD 이름 확인
 > - `SUBNET_ID` : **Networking → Virtual Cloud Networks → 서브넷** 에서 OCID 복사
 > - `IMAGE_ID` : 인스턴스 생성 화면에서 이미지 선택 후 이미지 OCID 복사
-> - `AD` : 가용성 도메인 이름 (예: `namespace:AP-TOKYO-1-AD-1`)
-
-**2단계 — OCI Cloud Shell에 업로드**
-
-콘솔 오른쪽 상단의 Cloud Shell 아이콘을 클릭한 후, 파일 업로드 기능으로 `launch.sh`를 업로드합니다.
+> - `SSH_KEY_FILE` : VM 접속용 SSH 공개 키 파일 경로
 
 **3단계 — 실행 권한 부여 및 백그라운드 실행**
 
 ```bash
-chmod +x launch.sh
-nohup ./launch.sh > output.log 2>&1 &
+chmod +x oci-create.sh
+nohup ./oci-create.sh > /dev/null 2>&1 &
 ```
 
 **4단계 — 로그 확인**
 
-Cloud Shell 세션이 종료되어도 프로세스는 계속 실행됩니다. 아래 명령어로 진행 상황을 확인합니다.
-
 ```bash
-tail -f output.log
+tail -f ~/oci-instance.log
 ```
 
-로그에 **"인스턴스 생성에 성공했습니다."** 메시지가 출력되면 완료입니다.
-
----
-
-#### 방법 B — GitHub Actions (장기 재시도, 권장)
-
-브라우저를 닫아도 GitHub 서버에서 10분마다 자동으로 재시도합니다. 인스턴스 생성에 성공하면 워크플로우가 자동으로 비활성화됩니다.
-
-**1단계 — GitHub Secrets 등록**
-
-저장소의 **Settings → Secrets and variables → Actions** 에서 아래 7개 시크릿을 등록합니다.
-
-| Secret 이름 | 값 |
-|---|---|
-| `OCI_USER_OCID` | 사용자 OCID (`ocid1.user.oc1..xxxxxx`) |
-| `OCI_TENANCY_OCID` | 테넌시 OCID (`ocid1.tenancy.oc1..xxxxxx`) |
-| `OCI_FINGERPRINT` | API 키 핑거프린트 (`xx:xx:xx:...`) |
-| `OCI_PRIVATE_KEY` | API 서명 개인 키 전체 내용 (`-----BEGIN PRIVATE KEY-----` 포함) |
-| `OCI_REGION` | 리전 식별자 (예: `ap-tokyo-1`) |
-| `OCI_AD` | 가용성 도메인 (예: `namespace:AP-TOKYO-1-AD-1`) |
-| `OCI_COMPARTMENT_ID` | 구획 OCID |
-| `OCI_SUBNET_ID` | 서브넷 OCID |
-| `OCI_IMAGE_ID` | 이미지 OCID |
-| `OCI_SSH_PUBLIC_KEY` | SSH 공개 키 전체 내용 (`ssh-rsa AAAA...`) |
-
-> **OCI API 키 발급 방법**
-> OCI 콘솔 오른쪽 상단 사용자 아이콘 → **My profile → API keys → Add API key** 에서
-> 키 쌍을 생성하고 개인 키(`.pem` 파일)와 핑거프린트를 확인합니다.
-
-**2단계 — 워크플로우 파일 추가**
-
-아래 경로로 파일을 생성합니다: `.github/workflows/launch-oci.yml`
-
-```yaml
-name: OCI Instance Auto-Launch
-
-on:
-  schedule:
-    - cron: '*/10 * * * *'  # 10분마다 실행
-  workflow_dispatch:         # 수동 실행 가능
-
-jobs:
-  launch:
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-
-    steps:
-      - name: OCI CLI 설치
-        run: pip install oci-cli --quiet
-
-      - name: OCI CLI 설정
-        env:
-          OCI_PRIVATE_KEY: ${{ secrets.OCI_PRIVATE_KEY }}
-          OCI_USER_OCID: ${{ secrets.OCI_USER_OCID }}
-          OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
-          OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
-          OCI_REGION: ${{ secrets.OCI_REGION }}
-        run: |
-          mkdir -p ~/.oci
-          printf '%s' "$OCI_PRIVATE_KEY" > ~/.oci/private_key.pem
-          chmod 600 ~/.oci/private_key.pem
-          cat > ~/.oci/config << EOF
-          [DEFAULT]
-          user=$OCI_USER_OCID
-          fingerprint=$OCI_FINGERPRINT
-          tenancy=$OCI_TENANCY_OCID
-          region=$OCI_REGION
-          key_file=/root/.oci/private_key.pem
-          EOF
-
-      - name: 기존 인스턴스 확인
-        id: check
-        env:
-          OCI_COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
-        run: |
-          COUNT=$(oci compute instance list \
-            --compartment-id "$OCI_COMPARTMENT_ID" \
-            --display-name "oci-vm-auto" \
-            --lifecycle-state RUNNING \
-            --query 'length(data)' \
-            --raw-output 2>/dev/null || echo "0")
-          echo "count=$COUNT" >> $GITHUB_OUTPUT
-
-      - name: 인스턴스 생성 시도
-        if: steps.check.outputs.count == '0'
-        id: launch
-        env:
-          OCI_AD: ${{ secrets.OCI_AD }}
-          OCI_COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
-          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
-          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
-          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
-        run: |
-          printf '%s' "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
-          echo "시도 시간: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          oci compute instance launch \
-            --availability-domain "$OCI_AD" \
-            --compartment-id "$OCI_COMPARTMENT_ID" \
-            --shape "VM.Standard.A1.Flex" \
-            --shape-config '{"ocpus": 4.0, "memoryInGBs": 24.0}' \
-            --subnet-id "$OCI_SUBNET_ID" \
-            --image-id "$OCI_IMAGE_ID" \
-            --assign-public-ip true \
-            --display-name "oci-vm-auto" \
-            --ssh-authorized-keys-file /tmp/oci_key.pub \
-            --wait-for-state RUNNING && \
-            echo "success=true" >> $GITHUB_OUTPUT
-
-      - name: 성공 시 워크플로우 자동 비활성화
-        if: steps.launch.outputs.success == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          curl -s -X PUT \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/$GH_REPO/actions/workflows/launch-oci.yml/disable"
-```
-
-**3단계 — 커밋 & 푸시**
-
-```bash
-git add .github/workflows/launch-oci.yml
-git commit -m "Add OCI instance auto-launch workflow"
-git push
-```
-
-푸시 후 저장소의 **Actions** 탭에서 실행 상태를 확인할 수 있습니다.
-인스턴스 생성에 성공하면 워크플로우가 자동으로 비활성화되고, Actions 탭에서도 확인 가능합니다.
+로그에 **"성공! 인스턴스가 생성되었습니다."** 메시지가 출력되면 완료입니다.
 
 ---
 
