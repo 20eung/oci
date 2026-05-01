@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: OCI CLI 설치
-        run: pip install oci-cli --quiet
+        run: pip install oci-cli -q --no-warn-script-location
 
       - name: OCI CLI 설정
         env:
@@ -22,17 +22,19 @@ jobs:
           OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
           OCI_REGION: ${{ secrets.OCI_REGION }}
         run: |
-          mkdir -p ~/.oci
-          printf '%s' "$OCI_PRIVATE_KEY" > ~/.oci/private_key.pem
-          chmod 600 ~/.oci/private_key.pem
-          cat > ~/.oci/config << EOF
-          [DEFAULT]
-          user=$OCI_USER_OCID
-          fingerprint=$OCI_FINGERPRINT
-          tenancy=$OCI_TENANCY_OCID
-          region=$OCI_REGION
-          key_file=/root/.oci/private_key.pem
-          EOF
+          mkdir -p "$HOME/.oci"
+          printf '%s' "$OCI_PRIVATE_KEY" > "$HOME/.oci/private_key.pem"
+          chmod 600 "$HOME/.oci/private_key.pem"
+          printf '[DEFAULT]\nuser=%s\nfingerprint=%s\ntenancy=%s\nregion=%s\nkey_file=%s/.oci/private_key.pem\n' \
+            "$OCI_USER_OCID" \
+            "$OCI_FINGERPRINT" \
+            "$OCI_TENANCY_OCID" \
+            "$OCI_REGION" \
+            "$HOME" > "$HOME/.oci/config"
+          chmod 600 "$HOME/.oci/config"
+
+      - name: OCI CLI 연결 확인
+        run: oci iam region list --output table
 
       - name: 기존 인스턴스 확인
         id: check
@@ -43,9 +45,9 @@ jobs:
             --compartment-id "$OCI_COMPARTMENT_ID" \
             --display-name "oci-vm-auto" \
             --lifecycle-state RUNNING \
-            --query 'length(data)' \
+            --query "length(data)" \
             --raw-output 2>/dev/null || echo "0")
-          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           echo "현재 실행 중인 인스턴스 수: $COUNT"
 
       - name: 인스턴스 생성 시도
@@ -59,7 +61,6 @@ jobs:
           OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
         run: |
           printf '%s' "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
-
           echo "시도 시간: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 
           oci compute instance launch \
@@ -72,8 +73,9 @@ jobs:
             --assign-public-ip true \
             --display-name "oci-vm-auto" \
             --ssh-authorized-keys-file /tmp/oci_key.pub \
-            --wait-for-state RUNNING && \
-            echo "success=true" >> $GITHUB_OUTPUT
+            --wait-for-state RUNNING \
+            --max-wait-seconds 360 && \
+            echo "success=true" >> "$GITHUB_OUTPUT"
 
       - name: 이미 인스턴스 존재
         if: steps.check.outputs.count != '0'
