@@ -61,7 +61,7 @@ jobs:
           OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
           OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
         run: |
-          printf '%s' "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
+          echo "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
           echo "시도 시간: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 
           oci compute instance launch \
