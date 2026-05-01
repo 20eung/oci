@@ -66,22 +66,24 @@ jobs:
           echo "--- SSH 키 파일 내용 확인 ---"
           cat /tmp/oci_key.pub
 
-          set +e
           oci compute instance launch \
             --availability-domain "$OCI_AD" \
             --compartment-id "$OCI_COMPARTMENT_ID" \
             --shape "VM.Standard.A1.Flex" \
-            --shape-config '{"ocpus": 4, "memory_in_gbs": 24}' \
+            --shape-config '{"ocpus": 4, "memoryInGBs": 24}' \
             --subnet-id "$OCI_SUBNET_ID" \
-            --image-id "$OCI_IMAGE_ID" \
+            --source-details "{\"sourceType\": \"image\", \"imageId\": \"$OCI_IMAGE_ID\"}" \
             --assign-public-ip true \
             --display-name "oci-vm-auto" \
             --ssh-authorized-keys-file /tmp/oci_key.pub \
             --wait-for-state RUNNING \
             --max-wait-seconds 360 \
             --debug 2>&1
-          if [ $? -eq 0 ]; then
+          RESULT=$?
+          if [ $RESULT -eq 0 ]; then
             echo "success=true" >> "$GITHUB_OUTPUT"
+          else
+            exit $RESULT
           fi
 
       - name: 이미 인스턴스 존재
