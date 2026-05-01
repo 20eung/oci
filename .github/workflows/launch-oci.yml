@@ -63,7 +63,10 @@ jobs:
         run: |
           echo "$OCI_SSH_PUBLIC_KEY" > /tmp/oci_key.pub
           echo "시도 시간: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "--- SSH 키 파일 내용 확인 ---"
+          cat /tmp/oci_key.pub
 
+          set +e
           oci compute instance launch \
             --availability-domain "$OCI_AD" \
             --compartment-id "$OCI_COMPARTMENT_ID" \
@@ -75,8 +78,11 @@ jobs:
             --display-name "oci-vm-auto" \
             --ssh-authorized-keys-file /tmp/oci_key.pub \
             --wait-for-state RUNNING \
-            --max-wait-seconds 360 && \
+            --max-wait-seconds 360 \
+            --debug 2>&1
+          if [ $? -eq 0 ]; then
             echo "success=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: 이미 인스턴스 존재
         if: steps.check.outputs.count != '0'
